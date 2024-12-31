@@ -1,0 +1,12 @@
+version: "1"
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    ports:
+      - 6002:5432
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - TZ=Asia/Tokyo

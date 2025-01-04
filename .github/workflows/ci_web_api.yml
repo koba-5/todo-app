@@ -1,0 +1,32 @@
+name: ci_web_api
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - develop
+      - feature-**
+    paths:
+      - web-api/**
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: web-api
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: web-api/package.json
+      - name: Setup DB
+        run: docker compose up postgres -d
+      - name: Install node modules
+        run: npm i
+      - name: Generate Types
+        run: npm run gen
+      - name: DB Migration
+        run: npm run db:init
+      - name: jest
+        run: npm run test

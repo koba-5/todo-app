@@ -1,0 +1,34 @@
+type User {
+  id: Int!
+  name_sei: String!
+  name_mei: String!
+  name_sei_kana: String!
+  name_mei_kana: String!
+  created_at: _DateTime!
+  updated_at: _DateTime!
+}
+
+input GetUserInput {
+  id: Int!
+}
+
+extend type Query {
+  getUser(input: GetUserInput!): User
+}
+
+input CreateUserInput {
+  id: Int
+  name_sei: String!
+  name_mei: String!
+  name_sei_kana: String!
+  name_mei_kana: String!
+}
+
+input DeleteUserInput {
+  id: Int!
+}
+
+extend type Mutation {
+  createUser(input: CreateUserInput!): Int!
+  deleteUser(input: DeleteUserInput!): Int!
+}

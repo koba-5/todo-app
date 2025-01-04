@@ -1,0 +1,94 @@
+enum Progress {
+  NOT_STARTED
+  IN_PROGRESS
+  DONE
+  ON_HOLD
+}
+
+enum Priority {
+  HIGH
+  NORMAL
+  LOW
+}
+
+type TodoActivity {
+  id: Int!
+  content: String!
+  created_at: _DateTime!
+  updated_at: _DateTime!
+}
+
+type ChildTodo {
+  id: Int!
+  title: String!
+  progress: Progress!
+  priority: Priority!
+  start_date: _Date
+  end_date: _Date
+  content: String
+  activities: [TodoActivity!]!
+  created_at: _DateTime!
+  updated_at: _DateTime!
+}
+
+type ParentTodo {
+  id: Int!
+  user_id: Int!
+  title: String!
+  progress: Progress!
+  priority: Priority!
+  start_date: _Date
+  end_date: _Date
+  content: String
+  activities: [TodoActivity!]!
+  created_at: _DateTime!
+  updated_at: _DateTime!
+  children: [ChildTodo!]!
+}
+
+input GetTodoInput {
+  id: Int!
+}
+
+input GetTodoListInput {
+  user_id: Int!
+  page: Int!
+  size: Int!
+}
+
+extend type Query {
+  getTodo(input: GetTodoInput!): ParentTodo!
+  getTodoList(input: GetTodoListInput!): [ParentTodo!]!
+}
+
+input CreateTodoInput {
+  id: Int
+  user_id: Int!
+  title: String!
+  progress: Progress!
+  priority: Priority!
+  start_date: _Date
+  end_date: _Date
+  parent_id: Int
+}
+
+input DeleteTodoInput {
+  id: Int!
+}
+
+input CreateTodoActivityInput {
+  id: Int
+  todo_id: Int!
+  content: String!
+}
+
+input DeleteTodoActivityInput {
+  id: Int!
+}
+
+extend type Mutation {
+  createTodo(input: CreateTodoInput!): Int!
+  deleteTodo(input: DeleteTodoInput!): Int!
+  createTodoActivity(input: CreateTodoActivityInput!): Int!
+  deleteTodoActivity(input: DeleteTodoActivityInput!): Int!
+}

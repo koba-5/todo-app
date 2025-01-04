@@ -1,0 +1,36 @@
+model progress {
+  id   Int    @id
+  name String
+}
+
+model priority {
+  id   Int    @id
+  name String
+}
+
+model todo {
+  id          Int             @id @default(autoincrement())
+  user_id     Int
+  user        user            @relation(fields: [user_id], references: [id])
+  title       String
+  progress_id Int
+  priority_id Int
+  start_date  DateTime?       @db.Timestamptz(0)
+  end_date    DateTime?       @db.Timestamptz(0)
+  content     String?
+  activities  todo_activity[]
+  created_at  DateTime        @default(now()) @db.Timestamptz(0)
+  updated_at  DateTime        @default(now()) @updatedAt @db.Timestamptz(0)
+  parent_id   Int?
+  parent      todo?           @relation("parentTodo", fields: [parent_id], references: [id])
+  children    todo[]          @relation("parentTodo")
+}
+
+model todo_activity {
+  id         Int      @id @default(autoincrement())
+  todo_id    Int
+  todo       todo     @relation(fields: [todo_id], references: [id])
+  content    String
+  created_at DateTime @default(now()) @db.Timestamptz(0)
+  updated_at DateTime @default(now()) @updatedAt @db.Timestamptz(0)
+}

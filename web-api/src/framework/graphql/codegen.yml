@@ -1,0 +1,18 @@
+schema:
+  - ./src/framework/graphql/schema/base.graphql
+  - ./src/framework/graphql/schema/user.graphql
+  - ./src/framework/graphql/schema/todo.graphql
+generates:
+  ./src/framework/graphql/schema.graphql:
+    plugins:
+      - schema-ast
+  ./src/framework/graphql/generated.d.ts:
+    plugins:
+      - typescript
+      - typescript-resolvers
+    config:
+      strictScalars: true
+      scalars:
+        _Date: Date
+        _DateTime: Date
+      enumsAsTypes: true

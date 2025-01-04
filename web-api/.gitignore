@@ -1,0 +1,5 @@
+node_modules
+src/framework/prisma/migrations
+src/framework/graphql/schema.graphql
+src/framework/graphql/generated.d.ts
+coverage
